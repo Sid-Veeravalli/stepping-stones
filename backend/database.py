@@ -26,7 +26,10 @@ if DATABASE_URL:
         pool_pre_ping=True,  # Handle connection drops
         pool_size=5,
         max_overflow=10,
-        connect_args={"statement_cache_size": 0}  # Disable prepared statements for pgbouncer compatibility
+        connect_args={
+            "statement_cache_size": 0,  # Disable prepared statements for pgbouncer
+            "prepared_statement_cache_size": 0  # Additional asyncpg parameter
+        }
     )
 else:
     # Local development: Use SQLite

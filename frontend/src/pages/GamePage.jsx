@@ -82,7 +82,7 @@ function GamePage({ role }) {
 
   // Start dice timer when waiting for dice (visible to all, but skip modal only for facilitator)
   const startDiceTimer = useCallback(() => {
-    setDiceTimer(30);
+    setDiceTimer(60);
     if (diceTimerRef.current) {
       clearInterval(diceTimerRef.current);
     }
