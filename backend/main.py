@@ -538,6 +538,18 @@ async def import_questions_from_excel(
                     return None
                 return str(val).strip() if str(val).strip() else None
 
+            # Get answer from CSV
+            answer_value = get_optional('Answer')
+
+            # For MCQ: answer is A/B/C/D (goes to correct_answer)
+            # For Fill in the Blanks and What Would You Do: answer is text (goes to model_answer)
+            if question_type == 'MCQ':
+                correct_ans = answer_value
+                model_ans = None
+            else:
+                correct_ans = None
+                model_ans = answer_value
+
             # Create question
             question_data = schemas.QuestionCreate(
                 question_text=question_text,
@@ -548,8 +560,8 @@ async def import_questions_from_excel(
                 option_b=get_optional('Option B'),
                 option_c=get_optional('Option C'),
                 option_d=get_optional('Option D'),
-                correct_answer=get_optional('Answer'),
-                model_answer=get_optional('Answer')
+                correct_answer=correct_ans,
+                model_answer=model_ans
             )
 
             await crud.create_question(db, question_data, quiz_id)
