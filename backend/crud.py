@@ -111,12 +111,20 @@ async def update_quiz(db: AsyncSession, quiz_id: int, quiz_update: QuizUpdate) -
 
 
 async def delete_quiz(db: AsyncSession, quiz_id: int) -> bool:
-    """Delete quiz"""
+    """Delete quiz (cascade deletes associated questions)"""
+    # Fetch the quiz object to trigger ORM cascade delete
     result = await db.execute(
-        delete(Quiz).where(Quiz.id == quiz_id)
+        select(Quiz).where(Quiz.id == quiz_id)
     )
+    db_quiz = result.scalar_one_or_none()
+
+    if not db_quiz:
+        return False
+
+    # Delete using ORM to trigger cascade
+    await db.delete(db_quiz)
     await db.commit()
-    return result.rowcount > 0
+    return True
 
 
 # ==================== Question CRUD ====================
