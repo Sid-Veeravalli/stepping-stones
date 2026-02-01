@@ -1,0 +1,70 @@
+.timer {
+  margin-bottom: 1.5rem;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.timer-icon {
+  font-size: 2rem;
+}
+
+.timer-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.timer.normal .timer-text {
+  color: var(--success);
+}
+
+.timer.warning .timer-text {
+  color: var(--warning);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.timer.critical .timer-text {
+  color: var(--danger);
+  animation: pulse 0.5s ease-in-out infinite;
+}
+
+.timer-bar {
+  width: 100%;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.timer-fill {
+  height: 100%;
+  transition: width 1s linear, background-color 0.3s ease;
+  border-radius: 6px;
+}
+
+.timer.normal .timer-fill {
+  background: linear-gradient(90deg, var(--success) 0%, var(--leaf-green) 100%);
+}
+
+.timer.warning .timer-fill {
+  background: linear-gradient(90deg, var(--warning) 0%, #ffc966 100%);
+}
+
+.timer.critical .timer-fill {
+  background: linear-gradient(90deg, var(--danger) 0%, #ff6b6b 100%);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

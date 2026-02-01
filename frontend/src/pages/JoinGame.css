@@ -1,0 +1,137 @@
+.join-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
+  flex: 1;
+  background: linear-gradient(135deg, #2d5016 0%, #3a6120 50%, #4a7c2c 100%);
+}
+
+.join-game-card {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: 3rem;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 0.5s ease-out;
+  position: relative;
+  z-index: 2;
+}
+
+.join-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.join-header h1 {
+  color: var(--forest-green);
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.join-header p {
+  color: var(--stone-gray);
+}
+
+.join-form {
+  margin-bottom: 1.5rem;
+}
+
+.room-code-input {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+
+.join-form button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.join-footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--stone-gray-light);
+}
+
+.join-footer p {
+  color: var(--stone-gray);
+  margin-bottom: 0.5rem;
+}
+
+.back-home-link {
+  margin-top: 1rem;
+}
+
+.join-footer .link {
+  color: var(--forest-green);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.join-footer .link:hover {
+  color: var(--forest-green-dark);
+}
+
+.forest-animals {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.animal {
+  position: absolute;
+  font-size: 3rem;
+  animation: float 3s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+.animal.bear {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.animal.fox {
+  top: 20%;
+  right: 15%;
+  animation-delay: 0.5s;
+}
+
+.animal.rabbit {
+  bottom: 15%;
+  left: 15%;
+  animation-delay: 1s;
+}
+
+.animal.deer {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+.animal.owl {
+  top: 50%;
+  left: 5%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}

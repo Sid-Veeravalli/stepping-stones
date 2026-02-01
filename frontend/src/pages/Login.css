@@ -1,0 +1,152 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  width: 100%;
+  flex: 1;
+  background: linear-gradient(135deg, #2d5016 0%, #3a6120 50%, #4a7c2c 100%);
+}
+
+.login-card {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: 3rem;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 450px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  color: var(--forest-green);
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.login-header p {
+  color: var(--stone-gray);
+  font-size: 1rem;
+}
+
+.login-form {
+  margin-bottom: 1.5rem;
+}
+
+.login-form button[type='submit'] {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.toggle-mode {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.toggle-mode p {
+  color: var(--stone-gray);
+}
+
+.player-link {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--stone-gray-light);
+}
+
+.player-link p {
+  color: var(--stone-gray);
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  background: #ffe6e6;
+  border: 2px solid var(--danger);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: var(--danger);
+  text-align: center;
+}
+
+.password-requirements {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--stone-gray-light);
+}
+
+.password-requirements small {
+  display: block;
+  color: var(--stone-gray);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.password-requirements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.password-requirements li {
+  padding: 0.3rem 0;
+  color: var(--stone-gray);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.password-requirements li::before {
+  content: '○';
+  position: absolute;
+  left: 0;
+  color: var(--stone-gray);
+}
+
+.password-requirements li.valid {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.password-requirements li.valid::before {
+  content: '✓';
+  color: var(--success);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--forest-green);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: var(--forest-green-dark);
+}
+
+.btn-link:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.back-home {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--stone-gray-light);
+}

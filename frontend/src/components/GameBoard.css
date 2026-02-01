@@ -1,0 +1,621 @@
+/* 3D Isometric Game Board */
+.game-board-3d {
+  background: linear-gradient(180deg, #2d5a27 0%, #1e4620 50%, #153515 100%);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Forest Scene Background */
+.forest-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* CSS Trees */
+.css-tree {
+  position: absolute;
+  opacity: 0.8;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.css-tree .tree-top {
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 40px solid #2d5a27;
+  position: relative;
+}
+
+.css-tree .tree-top::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: -14px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 32px solid #3a7232;
+}
+
+.css-tree .tree-top::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 24px solid #4a8c42;
+}
+
+.css-tree .tree-trunk {
+  width: 8px;
+  height: 15px;
+  background: linear-gradient(90deg, #5c4033 0%, #8b6914 50%, #5c4033 100%);
+  margin: 0 auto;
+  border-radius: 0 0 2px 2px;
+}
+
+/* Tree positions - now along top and bottom edges */
+.tree-1 { top: 5px; left: 5%; }
+.tree-2 { top: 8px; left: 25%; transform: scale(0.8); }
+.tree-3 { top: 5px; right: 15%; }
+.tree-4 { top: 10px; right: 5%; transform: scale(0.9); }
+
+/* CSS Grass Patches */
+.grass-patch {
+  position: absolute;
+  display: flex;
+  gap: 2px;
+}
+
+.grass-blade {
+  width: 3px;
+  height: 12px;
+  background: linear-gradient(180deg, #6b8e23 0%, #228b22 100%);
+  border-radius: 3px 3px 0 0;
+  transform-origin: bottom center;
+}
+
+.grass-blade:nth-child(1) { transform: rotate(-15deg); height: 10px; }
+.grass-blade:nth-child(2) { transform: rotate(0deg); height: 14px; }
+.grass-blade:nth-child(3) { transform: rotate(15deg); height: 11px; }
+
+/* Grass positions */
+.grass-1 { bottom: 12px; left: 10%; }
+.grass-2 { bottom: 10px; left: 40%; }
+.grass-3 { bottom: 15px; right: 30%; }
+.grass-4 { bottom: 8px; right: 10%; }
+
+/* CSS Bushes */
+.css-bush {
+  position: absolute;
+  width: 30px;
+  height: 18px;
+  background: radial-gradient(ellipse at center, #4a8c42 0%, #2d5a27 100%);
+  border-radius: 50% 50% 40% 40%;
+  opacity: 0.7;
+}
+
+.css-bush::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 14px;
+  background: radial-gradient(ellipse at center, #5a9c52 0%, #3a7232 100%);
+  border-radius: 50%;
+  top: -6px;
+  left: 4px;
+}
+
+.css-bush.bush-1 { bottom: 20px; left: 3%; }
+.css-bush.bush-2 { bottom: 18px; right: 5%; }
+
+/* Board Title */
+.board-title {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.board-title h3 {
+  color: #fff;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  margin: 0 0 0.2rem 0;
+}
+
+.board-title .subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+/* Path Container - Horizontal Scrolling */
+.path-container {
+  position: relative;
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 10px;
+  min-height: 220px;
+}
+
+.path-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.path-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.path-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.path-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Path Trail SVG */
+.path-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Rock Tile - 3D Isometric */
+.rock-tile {
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  z-index: 1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.rock-tile:hover {
+  z-index: 10;
+}
+
+.rock-tile:hover .rock-3d {
+  transform: translateY(-5px);
+}
+
+/* 3D Rock Structure */
+.rock-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+/* Rock Top Surface */
+.rock-top {
+  position: absolute;
+  width: 70px;
+  height: 45px;
+  background: linear-gradient(145deg,
+    #9a8b7a 0%,
+    #8b7d6b 25%,
+    #7a6e5d 50%,
+    #6b5f4f 75%,
+    #5c5242 100%
+  );
+  border-radius: 12px 15px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.25),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(90, 80, 70, 0.6);
+  z-index: 2;
+}
+
+/* Rock texture overlay */
+.rock-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 75% 65%, rgba(0, 0, 0, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.05) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Mossy texture on rocks */
+.rock-top::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 5px;
+  right: 5px;
+  height: 8px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(76, 120, 76, 0.3) 20%,
+    rgba(76, 120, 76, 0.4) 50%,
+    rgba(76, 120, 76, 0.3) 80%,
+    transparent 100%
+  );
+  border-radius: 0 0 6px 6px;
+  filter: blur(1px);
+}
+
+/* Rock Front Face (3D depth) */
+.rock-front {
+  position: absolute;
+  bottom: -12px;
+  left: 3px;
+  width: 64px;
+  height: 15px;
+  background: linear-gradient(180deg,
+    #5c5242 0%,
+    #4a4236 50%,
+    #3d372c 100%
+  );
+  border-radius: 0 0 8px 8px;
+  z-index: 1;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Rock Left Face (3D depth) */
+.rock-left {
+  position: absolute;
+  bottom: -8px;
+  left: -5px;
+  width: 10px;
+  height: 40px;
+  background: linear-gradient(90deg,
+    #3d372c 0%,
+    #4a4236 100%
+  );
+  border-radius: 4px 0 0 8px;
+  transform: skewY(-15deg);
+  z-index: 0;
+}
+
+/* Rock Number */
+.rock-number {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Start Marker */
+.start-marker {
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #4ade80;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 8px;
+  letter-spacing: 1px;
+}
+
+/* Finish Marker */
+.finish-marker {
+  font-size: 1rem;
+  position: absolute;
+  bottom: 5px;
+}
+
+/* Start Rock */
+.start-rock .rock-top {
+  background: linear-gradient(145deg,
+    #5cb85c 0%,
+    #4cae4c 25%,
+    #449d44 50%,
+    #398439 75%,
+    #2d6b2d 100%
+  );
+  border-color: rgba(40, 100, 40, 0.6);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(76, 175, 80, 0.4);
+}
+
+.start-rock .rock-front {
+  background: linear-gradient(180deg, #2d6b2d 0%, #1e4620 100%);
+}
+
+.start-rock .rock-left {
+  background: linear-gradient(90deg, #1e4620 0%, #2d6b2d 100%);
+}
+
+/* Finish Rock */
+.finish-rock .rock-top {
+  background: linear-gradient(145deg,
+    #ffd700 0%,
+    #ffcc00 25%,
+    #e6b800 50%,
+    #cca300 75%,
+    #b38f00 100%
+  );
+  border-color: rgba(180, 150, 0, 0.6);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.finish-rock .rock-front {
+  background: linear-gradient(180deg, #b38f00 0%, #8f7200 100%);
+}
+
+.finish-rock .rock-left {
+  background: linear-gradient(90deg, #8f7200 0%, #b38f00 100%);
+}
+
+/* Milestone Rock (every 5) - Moss Green */
+.milestone-rock .rock-top {
+  background: linear-gradient(145deg,
+    #66be66 0%,
+    #66be66 25%,
+    #66be66 50%,
+    #66be66 75%,
+    #66be66 100%
+  );
+  border-color: rgba(60, 100, 60, 0.6);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(75, 120, 75, 0.3);
+}
+
+.milestone-rock .rock-front {
+  background: linear-gradient(180deg, #2d4a2d 0%, #1e3a1e 100%);
+}
+
+.milestone-rock .rock-left {
+  background: linear-gradient(90deg, #1e3a1e 0%, #2d4a2d 100%);
+}
+
+.milestone-rock .rock-number {
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+/* Tokens Container */
+.tokens-container {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  z-index: 5;
+}
+
+/* Player Token */
+.player-token {
+  position: relative;
+  animation: tokenFloat 2s ease-in-out infinite;
+}
+
+.token-emoji {
+  font-size: 1.6rem;
+  display: block;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s ease;
+}
+
+.player-token:hover .token-emoji {
+  transform: scale(1.3);
+}
+
+/* Current Turn Highlight */
+.player-token.current-turn {
+  animation: currentTurnBounce 0.6s ease-in-out infinite;
+}
+
+.player-token.current-turn .token-emoji {
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)) drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Turn Indicator Dot */
+.turn-indicator {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  background: #ff4444;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+  animation: notificationPulse 1s ease-in-out infinite;
+}
+
+@keyframes notificationPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 68, 68, 1);
+  }
+}
+
+@keyframes tokenFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes currentTurnBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.1); }
+}
+
+/* Teams Legend */
+.teams-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.legend-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.legend-item.active-turn {
+  background: rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.legend-emoji {
+  font-size: 1.1rem;
+}
+
+.legend-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.legend-score {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+}
+
+/* Turn Dot in Legend */
+.turn-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  animation: notificationPulse 1s ease-in-out infinite;
+  margin-left: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .path-container {
+    max-width: 100%;
+  }
+
+  .rock-tile {
+    width: 55px;
+    height: 40px;
+  }
+
+  .rock-top {
+    width: 55px;
+    height: 36px;
+  }
+
+  .rock-front {
+    width: 49px;
+    height: 12px;
+  }
+
+  .token-emoji {
+    font-size: 1.3rem;
+  }
+
+  .css-tree, .css-bush, .grass-patch {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .path-container {
+    max-width: 100%;
+  }
+
+  .rock-tile {
+    width: 45px;
+    height: 35px;
+  }
+
+  .rock-top {
+    width: 45px;
+    height: 30px;
+  }
+
+  .rock-front {
+    width: 39px;
+    height: 10px;
+  }
+
+  .rock-number {
+    font-size: 0.55rem;
+  }
+
+  .token-emoji {
+    font-size: 1rem;
+  }
+
+  .legend-item {
+    padding: 0.3rem 0.5rem;
+  }
+
+  .legend-name {
+    font-size: 0.7rem;
+  }
+}
