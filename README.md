@@ -142,6 +142,3 @@ For production deployment, configure these environment variables:
 5. Correct answers move the team forward on the game board
 6. First team to reach the finish line wins!
 
-## License
-
-MIT
